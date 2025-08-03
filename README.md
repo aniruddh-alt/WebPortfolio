@@ -1,2 +1,0 @@
-# WebPortfolio
-My developer portfolio
