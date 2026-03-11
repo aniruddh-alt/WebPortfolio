@@ -1,12 +1,13 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 
 const navItems = [
   { label: 'About', href: '#about' },
   { label: 'Experience', href: '#experience' },
+  { label: 'Publications', href: '#publications' },
   { label: 'Projects', href: '#projects' },
   { label: 'Contact', href: '#contact' },
 ]
@@ -14,6 +15,16 @@ const navItems = [
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const { scrollY } = useScroll()
+
+  // Raw transforms from scroll position
+  const rawOpacity = useTransform(scrollY, [20, 160], [1, 0])
+  const rawWidth = useTransform(scrollY, [20, 160], [150, 0])
+
+  // Spring physics for that heavy, satisfying inertia
+  const springConfig = { stiffness: 80, damping: 20, mass: 1.2 }
+  const tailOpacity = useSpring(rawOpacity, springConfig)
+  const tailMaxWidth = useSpring(rawWidth, springConfig)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -33,9 +44,18 @@ export default function Navigation() {
       <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
         <a
           href="#"
-          className="font-serif text-xl text-zinc-50 hover:text-zinc-300 transition-colors"
+          className="font-serif text-xl text-zinc-50 hover:text-zinc-300 transition-colors flex items-baseline"
         >
-          Aniruddhan
+          <span>A</span>
+          <motion.span
+            style={{
+              opacity: tailOpacity,
+              maxWidth: tailMaxWidth,
+            }}
+            className="inline-block overflow-hidden whitespace-nowrap"
+          >
+            niruddhan
+          </motion.span>
         </a>
 
         <div className="hidden md:flex items-center gap-7">
@@ -48,6 +68,14 @@ export default function Navigation() {
               {item.label}
             </a>
           ))}
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[13px] text-zinc-500 hover:text-zinc-200 transition-colors tracking-wide border border-zinc-800 rounded-full px-3 py-1 hover:border-zinc-600"
+          >
+            Resume
+          </a>
         </div>
 
         <button
@@ -77,6 +105,15 @@ export default function Navigation() {
                   {item.label}
                 </a>
               ))}
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setOpen(false)}
+                className="text-sm text-zinc-500 hover:text-zinc-200 transition-colors"
+              >
+                Resume
+              </a>
             </div>
           </motion.div>
         )}

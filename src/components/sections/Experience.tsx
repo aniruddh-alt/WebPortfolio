@@ -1,33 +1,69 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
+import { motion } from "framer-motion";
+import { Cpu, Brain, Microscope, TrendingUp, Wrench, Building2 } from "lucide-react";
 
 const experiences = [
   {
-    role: 'Software / AI Infrastructure',
-    org: 'Oumi',
-    period: 'Present',
+    icon: Cpu,
+    role: "Machine Learning Engineer Intern",
+    org: "Oumi",
+    period: "Jan 2026 · Present",
+    location: "Seattle, WA",
     description:
-      'Working on open-source AI infrastructure — training pipelines, evaluation frameworks, and tooling for understanding large language models at scale.',
-    tags: ['Python', 'PyTorch', 'LLMs', 'Infrastructure'],
+      "Building data synthesis and interpretability tools on Oumi's open-source foundation model stack. Currently putting together an MCP server integration from scratch.",
+    tags: ["Python", "PyTorch", "LLMs", "Interpretability"],
   },
   {
-    role: 'Managing Partner',
-    org: 'Bearcat Ventures',
-    period: 'Present',
+    icon: Brain,
+    role: "AI Research Intern",
+    org: "Algoverse",
+    period: "Jun 2025 · Feb 2026",
     description:
-      'Leading UC\'s student-run venture fund. Evaluating early-stage startups, managing deal flow, and building the next generation of student investors. 2nd place at VCIC Midwest Regional @ Carnegie Mellon.',
-    tags: ['Venture Capital', 'Due Diligence', 'Leadership'],
+      "Studied how polysemanticity emerges and stabilizes in language models. The work got accepted into the NeurIPS 2025 Mechanistic Interpretability Workshop.",
+    tags: ["Mech Interp", "SAEs", "Research", "NeurIPS"],
   },
   {
-    role: 'Co-Founder',
-    org: 'PhizzIO',
-    period: '2023 — Present',
+    icon: Microscope,
+    role: "Biomedical Informatics Software Engineer",
+    org: "UC College of Medicine",
+    period: "Jan 2023 · Present",
+    location: "Cincinnati, OH",
     description:
-      'B2B platform using computer vision to improve physical therapy outcomes. Won Launch It: Cincy, Startup Weekend runner-up, and the IQ-E Pitch Competition. Built with Main Street Ventures support.',
-    tags: ['Computer Vision', 'React', 'Startup', 'Healthcare'],
+      "Working with the iCDCU lab building clinical software. Designed a research project management system for a pediatric heart institute. Two publications came out of this.",
+    tags: ["Python", "Flask", "SQL", "Healthcare"],
   },
-]
+  {
+    icon: TrendingUp,
+    role: "Managing Partner",
+    org: "Bearcat Ventures",
+    period: "Aug 2024 · Present",
+    location: "Cincinnati, OH",
+    description:
+      "Running UC's $1M student venture fund. Sourcing deals, leading diligence, managing a team of analysts. Took 2nd at the VCIC Midwest Regional at Carnegie Mellon.",
+    tags: ["Venture Capital", "Due Diligence", "Fund Management"],
+  },
+  {
+    icon: Wrench,
+    role: "Machine Learning Intern",
+    org: "Kinetic Vision",
+    period: "May · Aug 2025",
+    location: "Cincinnati, OH",
+    description:
+      "Built ML models to analyze surgical staple structural integrity, plus the data pipelines feeding them.",
+    tags: ["Python", "PyTorch", "Computer Vision"],
+  },
+  {
+    icon: Building2,
+    role: "Software Engineer Intern",
+    org: "Phillips Edison & Company",
+    period: "Jan · Dec 2024",
+    location: "Cincinnati, OH",
+    description:
+      "Two co-op rotations. Built an ETL pipeline using multimodal AI to pull structured data out of messy real estate documents like leases and site plans.",
+    tags: ["Python", "Azure", "SQL", "AI", "ETL"],
+  },
+];
 
 export default function Experience() {
   return (
@@ -49,51 +85,57 @@ export default function Experience() {
         </motion.div>
 
         <div>
-          {experiences.map((exp, i) => (
-            <motion.div
-              key={exp.org}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.08 }}
-              className="group"
-            >
-              <div className="divider" />
-              <div className="py-8 sm:py-10 grid grid-cols-1 sm:grid-cols-[140px_1fr] gap-2 sm:gap-12">
-                {/* Left */}
-                <div className="flex sm:flex-col gap-2 sm:gap-1">
-                  <span className="font-mono text-[12px] text-zinc-600 tracking-wider">
-                    {exp.period}
-                  </span>
-                </div>
-
-                {/* Right */}
-                <div>
-                  <div className="flex flex-wrap items-baseline gap-x-3 mb-3">
-                    <h3 className="text-[15px] font-medium text-zinc-100 group-hover:text-white transition-colors">
-                      {exp.role}
-                    </h3>
-                    <span className="text-[13px] text-zinc-500">
-                      {exp.org}
+          {experiences.map((exp, i) => {
+            const Icon = exp.icon;
+            return (
+              <motion.div
+                key={exp.org + exp.role}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.05 }}
+                className="group"
+              >
+                <div className="divider" />
+                <div className="py-8 sm:py-10 grid grid-cols-1 sm:grid-cols-[160px_1fr] gap-2 sm:gap-10">
+                  {/* Left */}
+                  <div className="flex sm:flex-col gap-3 sm:gap-2">
+                    <Icon
+                      size={15}
+                      className="text-zinc-600 group-hover:text-zinc-400 transition-colors mt-0.5 flex-shrink-0"
+                      strokeWidth={1.5}
+                    />
+                    <span className="font-mono text-[12px] text-zinc-600 tracking-wider whitespace-nowrap">
+                      {exp.period}
                     </span>
                   </div>
-                  <p className="text-[13px] text-zinc-500 leading-relaxed mb-4 max-w-2xl">
-                    {exp.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {exp.tags.map((tag) => (
-                      <span key={tag} className="tag font-mono">
-                        {tag}
-                      </span>
-                    ))}
+
+                  {/* Right */}
+                  <div>
+                    <div className="flex flex-wrap items-baseline gap-x-3 mb-3">
+                      <h3 className="text-[15px] font-medium text-zinc-100 group-hover:text-white transition-colors">
+                        {exp.role}
+                      </h3>
+                      <span className="text-[13px] text-zinc-500">{exp.org}</span>
+                    </div>
+                    <p className="text-[13px] text-zinc-500 leading-relaxed mb-4 max-w-2xl">
+                      {exp.description}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {exp.tags.map((tag) => (
+                        <span key={tag} className="tag font-mono">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
           <div className="divider" />
         </div>
       </div>
     </section>
-  )
+  );
 }

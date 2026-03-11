@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
-import { ArrowDown } from 'lucide-react'
+import { motion } from "framer-motion";
+import { ArrowDown } from "lucide-react";
 
 export default function Hero() {
   return (
@@ -37,9 +37,11 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.55 }}
           className="text-zinc-400 text-lg sm:text-xl leading-relaxed max-w-lg mb-12"
         >
-          Interested in{' '}
-          <span className="text-zinc-200">mechanistic interpretability</span>{' '}
-          — understanding how neural networks represent and process information from the inside out.
+          I like figuring out{" "}
+          <span className="text-zinc-200">
+            what&apos;s happening inside neural nets
+          </span>{" "}
+          and building tools that make it easier to find out.
         </motion.p>
 
         <motion.div
@@ -49,7 +51,7 @@ export default function Hero() {
           className="flex items-center gap-6"
         >
           <a
-            href="https://github.com/aniruddhanramesh"
+            href="https://github.com/aniruddh-alt"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[13px] text-zinc-500 hover:text-zinc-200 transition-colors tracking-wide"
@@ -65,7 +67,15 @@ export default function Hero() {
             LinkedIn
           </a>
           <a
-            href="https://twitter.com/"
+            href="https://scholar.google.com/citations?user=yscdiBoAAAAJ"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[13px] text-zinc-500 hover:text-zinc-200 transition-colors tracking-wide"
+          >
+            Scholar
+          </a>
+          <a
+            href="https://x.com/aniruddhr04"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[13px] text-zinc-500 hover:text-zinc-200 transition-colors tracking-wide"
@@ -73,7 +83,7 @@ export default function Hero() {
             X
           </a>
           <a
-            href="mailto:aniruddhan@example.com"
+            href="mailto:rameshad@mail.uc.edu"
             className="text-[13px] text-zinc-500 hover:text-zinc-200 transition-colors tracking-wide"
           >
             Email
@@ -90,11 +100,11 @@ export default function Hero() {
       >
         <motion.div
           animate={{ y: [0, 5, 0] }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
         >
           <ArrowDown size={16} className="text-zinc-600" strokeWidth={1.5} />
         </motion.div>
       </motion.div>
     </section>
-  )
+  );
 }

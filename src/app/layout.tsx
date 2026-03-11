@@ -1,34 +1,34 @@
-import type { Metadata } from 'next'
-import { Instrument_Serif } from 'next/font/google'
-import { GeistSans } from 'geist/font/sans'
-import { GeistMono } from 'geist/font/mono'
-import './globals.css'
+import type { Metadata } from "next";
+import { Instrument_Serif } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
+import "./globals.css";
 
 const instrumentSerif = Instrument_Serif({
-  subsets: ['latin'],
-  weight: '400',
-  variable: '--font-instrument',
-  display: 'swap',
-})
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-instrument",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: 'Aniruddhan Ramesh',
+  title: "Aniruddhan Ramesh",
   description:
-    'CS @ University of Cincinnati. Building at Oumi. Interested in mechanistic interpretability and understanding how neural networks think.',
+    "CS @ University of Cincinnati. ML Engineer at Oumi. Building open-source AI tooling.",
   keywords:
-    'Aniruddhan Ramesh, AI, mechanistic interpretability, Oumi, University of Cincinnati, computer science',
-  authors: [{ name: 'Aniruddhan Ramesh' }],
-}
+    "Aniruddhan Ramesh, machine learning, Oumi, open source, University of Cincinnati, computer science, NeurIPS",
+  authors: [{ name: "Aniruddhan Ramesh" }],
+};
 
 export const viewport = {
-  width: 'device-width',
+  width: "device-width",
   initialScale: 1,
-}
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html
@@ -40,5 +40,5 @@ export default function RootLayout({
         {children}
       </body>
     </html>
-  )
+  );
 }

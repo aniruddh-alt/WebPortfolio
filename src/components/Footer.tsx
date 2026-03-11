@@ -4,9 +4,10 @@ import { motion } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
 
 const links = [
-  { label: 'GitHub', href: 'https://github.com/aniruddhanramesh' },
+  { label: 'GitHub', href: 'https://github.com/aniruddh-alt' },
   { label: 'LinkedIn', href: 'https://linkedin.com/in/aniruddhan-ramesh-7854a0221' },
-  { label: 'X', href: 'https://twitter.com/' },
+  { label: 'Scholar', href: 'https://scholar.google.com/citations?user=yscdiBoAAAAJ' },
+  { label: 'X', href: 'https://x.com/aniruddhr04' },
 ]
 
 export default function Footer() {
@@ -27,15 +28,14 @@ export default function Footer() {
             Let&apos;s talk
           </h2>
           <p className="text-zinc-500 max-w-md leading-relaxed mb-8">
-            Interested in mechanistic interpretability, AI safety, startups, or anything in between.
-            Always happy to connect.
+            Happy to chat about ML research, open-source, startups, or whatever you&apos;re working on.
           </p>
           <a
-            href="mailto:aniruddhan@example.com"
+            href="mailto:rameshad@mail.uc.edu"
             className="inline-flex items-center gap-2 group"
           >
             <span className="text-lg text-zinc-200 group-hover:text-white transition-colors">
-              aniruddhan@example.com
+              rameshad@mail.uc.edu
             </span>
             <ArrowUpRight
               size={16}
@@ -49,7 +49,7 @@ export default function Footer() {
         <div className="divider" />
         <div className="pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <span className="text-[12px] text-zinc-600 font-mono tracking-wider">
-            Aniruddhan Ramesh &mdash; {new Date().getFullYear()}
+            Aniruddhan Ramesh · {new Date().getFullYear()}
           </span>
           <div className="flex items-center gap-5">
             {links.map((link) => (

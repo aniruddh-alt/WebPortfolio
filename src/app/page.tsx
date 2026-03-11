@@ -5,6 +5,8 @@ import NetworkBackground from '@/components/NetworkBackground'
 import Hero from '@/components/sections/Hero'
 import About from '@/components/sections/About'
 import Experience from '@/components/sections/Experience'
+import Publications from '@/components/sections/Publications'
+import Awards from '@/components/sections/Awards'
 import Projects from '@/components/sections/Projects'
 import Footer from '@/components/Footer'
 
@@ -17,6 +19,8 @@ export default function Home() {
         <Hero />
         <About />
         <Experience />
+        <Publications />
+        <Awards />
         <Projects />
         <Footer />
       </div>
