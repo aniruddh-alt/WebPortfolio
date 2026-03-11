@@ -1,184 +1,141 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
-import { Calendar, MapPin, Code, Award } from 'lucide-react'
-import PixelText from '../PixelText'
-import PixelCard from '../PixelCard'
+import { motion } from "framer-motion";
+import { Cpu, Brain, Microscope, TrendingUp, Wrench, Building2 } from "lucide-react";
 
 const experiences = [
   {
-    id: 1,
-    title: 'Senior Software Engineer',
-    company: 'Tech Corp',
-    location: 'San Francisco, CA',
-    period: '2022 - Present',
-    description: 'Led development of scalable microservices architecture serving 1M+ users. Implemented CI/CD pipelines and mentored junior developers.',
-    technologies: ['React', 'Node.js', 'AWS', 'Docker', 'PostgreSQL'],
-    achievements: [
-      'Improved system performance by 40%',
-      'Reduced deployment time from 2 hours to 15 minutes',
-      'Led team of 5 developers'
-    ],
-    color: 'green'
+    icon: Cpu,
+    role: "Machine Learning Engineer Intern",
+    org: "Oumi",
+    period: "Jan 2026 · Present",
+    location: "Seattle, WA",
+    description:
+      "Building data synthesis and interpretability tools on Oumi's open-source foundation model stack. Currently putting together an MCP server integration from scratch.",
+    tags: ["Python", "PyTorch", "LLMs", "Interpretability"],
   },
   {
-    id: 2,
-    title: 'Full Stack Developer',
-    company: 'Startup Inc',
-    location: 'Austin, TX',
-    period: '2020 - 2022',
-    description: 'Built entire product from MVP to production with 50k+ active users. Designed and implemented RESTful APIs and responsive web applications.',
-    technologies: ['Vue.js', 'Python', 'Django', 'Redis', 'MySQL'],
-    achievements: [
-      'Launched product that gained 50k users in 6 months',
-      'Implemented real-time chat feature',
-      'Optimized database queries by 60%'
-    ],
-    color: 'blue'
+    icon: Brain,
+    role: "AI Research Intern",
+    org: "Algoverse",
+    period: "Jun 2025 · Feb 2026",
+    description:
+      "Studied how polysemanticity emerges and stabilizes in language models. The work got accepted into the NeurIPS 2025 Mechanistic Interpretability Workshop.",
+    tags: ["Mech Interp", "SAEs", "Research", "NeurIPS"],
   },
   {
-    id: 3,
-    title: 'Software Developer Intern',
-    company: 'Innovation Labs',
-    location: 'Remote',
-    period: '2019 - 2020',
-    description: 'Contributed to open-source projects and internal tools. Gained experience in agile development and test-driven development.',
-    technologies: ['JavaScript', 'React', 'Express.js', 'MongoDB'],
-    achievements: [
-      'Contributed to 5+ open source projects',
-      'Built internal dashboard used by 100+ employees',
-      'Achieved 95% test coverage on assigned modules'
-    ],
-    color: 'purple'
-  }
-]
+    icon: Microscope,
+    role: "Biomedical Informatics Software Engineer",
+    org: "UC College of Medicine",
+    period: "Jan 2023 · Present",
+    location: "Cincinnati, OH",
+    description:
+      "Working with the iCDCU lab building clinical software. Designed a research project management system for a pediatric heart institute. Two publications came out of this.",
+    tags: ["Python", "Flask", "SQL", "Healthcare"],
+  },
+  {
+    icon: TrendingUp,
+    role: "Managing Partner",
+    org: "Bearcat Ventures",
+    period: "Aug 2024 · Present",
+    location: "Cincinnati, OH",
+    description:
+      "Running UC's $1M student venture fund. Sourcing deals, leading diligence, managing a team of analysts. Took 2nd at the VCIC Midwest Regional at Carnegie Mellon.",
+    tags: ["Venture Capital", "Due Diligence", "Fund Management"],
+  },
+  {
+    icon: Wrench,
+    role: "Machine Learning Intern",
+    org: "Kinetic Vision",
+    period: "May · Aug 2025",
+    location: "Cincinnati, OH",
+    description:
+      "Built ML models to analyze surgical staple structural integrity, plus the data pipelines feeding them.",
+    tags: ["Python", "PyTorch", "Computer Vision"],
+  },
+  {
+    icon: Building2,
+    role: "Software Engineer Intern",
+    org: "Phillips Edison & Company",
+    period: "Jan · Dec 2024",
+    location: "Cincinnati, OH",
+    description:
+      "Two co-op rotations. Built an ETL pipeline using multimodal AI to pull structured data out of messy real estate documents like leases and site plans.",
+    tags: ["Python", "Azure", "SQL", "AI", "ETL"],
+  },
+];
 
 export default function Experience() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.3
-      }
-    }
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, x: -50 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: { duration: 0.6 }
-    }
-  }
-
   return (
-    <section id="experience" className="py-20 bg-dark-surface/20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="experience" className="py-28 relative">
+      <div className="max-w-5xl mx-auto px-6">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          transition={{ duration: 0.5 }}
+          className="mb-14"
         >
-          <PixelText variant="h2" className="mb-4">
+          <p className="font-mono text-[13px] text-zinc-500 mb-4 tracking-wider">
             Experience
-          </PixelText>
-          <PixelText variant="p" className="text-gray-400 max-w-2xl mx-auto">
-            My journey through the tech industry, from intern to senior engineer
-          </PixelText>
+          </p>
+          <h2 className="font-serif text-3xl sm:text-4xl leading-tight text-zinc-50">
+            Where I&apos;ve been building
+          </h2>
         </motion.div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="relative"
-        >
-          {/* Timeline Line */}
-          <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-pixel-green transform md:-translate-x-1/2" />
-
-          {experiences.map((exp, index) => (
-            <motion.div
-              key={exp.id}
-              variants={itemVariants}
-              className={`relative flex items-center mb-16 ${
-                index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-              }`}
-            >
-              {/* Timeline Dot */}
-              <div className="absolute left-8 md:left-1/2 w-4 h-4 bg-pixel-green border-2 border-dark-bg rounded-full transform -translate-x-1/2 z-10" />
-
-              {/* Content */}
-              <div className={`w-full md:w-1/2 ${index % 2 === 0 ? 'md:pr-12' : 'md:pl-12'} ml-16 md:ml-0`}>
-                <PixelCard className="h-full">
-                  <div className="mb-4">
-                    <PixelText variant="h3" color={exp.color as any} className="mb-2">
-                      {exp.title}
-                    </PixelText>
-                    <PixelText variant="p" color="blue" className="mb-2 font-bold">
-                      {exp.company}
-                    </PixelText>
-                    <div className="flex flex-wrap gap-4 text-gray-400 mb-4">
-                      <div className="flex items-center gap-2">
-                        <Calendar size={16} />
-                        <PixelText variant="small">{exp.period}</PixelText>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <MapPin size={16} />
-                        <PixelText variant="small">{exp.location}</PixelText>
-                      </div>
-                    </div>
+        <div>
+          {experiences.map((exp, i) => {
+            const Icon = exp.icon;
+            return (
+              <motion.div
+                key={exp.org + exp.role}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.05 }}
+                className="group"
+              >
+                <div className="divider" />
+                <div className="py-8 sm:py-10 grid grid-cols-1 sm:grid-cols-[160px_1fr] gap-2 sm:gap-10">
+                  {/* Left */}
+                  <div className="flex sm:flex-col gap-3 sm:gap-2">
+                    <Icon
+                      size={15}
+                      className="text-zinc-600 group-hover:text-zinc-400 transition-colors mt-0.5 flex-shrink-0"
+                      strokeWidth={1.5}
+                    />
+                    <span className="font-mono text-[12px] text-zinc-600 tracking-wider whitespace-nowrap">
+                      {exp.period}
+                    </span>
                   </div>
 
-                  <PixelText variant="p" className="mb-6 text-gray-300 leading-relaxed">
-                    {exp.description}
-                  </PixelText>
-
-                  {/* Technologies */}
-                  <div className="mb-6">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Code size={16} className="text-pixel-blue" />
-                      <PixelText variant="small" color="blue">Technologies:</PixelText>
+                  {/* Right */}
+                  <div>
+                    <div className="flex flex-wrap items-baseline gap-x-3 mb-3">
+                      <h3 className="text-[15px] font-medium text-zinc-100 group-hover:text-white transition-colors">
+                        {exp.role}
+                      </h3>
+                      <span className="text-[13px] text-zinc-500">{exp.org}</span>
                     </div>
+                    <p className="text-[13px] text-zinc-500 leading-relaxed mb-4 max-w-2xl">
+                      {exp.description}
+                    </p>
                     <div className="flex flex-wrap gap-2">
-                      {exp.technologies.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-2 py-1 text-xs bg-pixel-blue/20 text-pixel-blue pixel-border"
-                        >
-                          {tech}
+                      {exp.tags.map((tag) => (
+                        <span key={tag} className="tag font-mono">
+                          {tag}
                         </span>
                       ))}
                     </div>
                   </div>
-
-                  {/* Achievements */}
-                  <div>
-                    <div className="flex items-center gap-2 mb-3">
-                      <Award size={16} className="text-pixel-yellow" />
-                      <PixelText variant="small" color="yellow">Key Achievements:</PixelText>
-                    </div>
-                    <ul className="space-y-2">
-                      {exp.achievements.map((achievement, i) => (
-                        <li key={i} className="flex items-start gap-2">
-                          <span className="text-pixel-green mt-1">▶</span>
-                          <PixelText variant="small" className="text-gray-300">
-                            {achievement}
-                          </PixelText>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </PixelCard>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+                </div>
+              </motion.div>
+            );
+          })}
+          <div className="divider" />
+        </div>
       </div>
     </section>
-  )
+  );
 }

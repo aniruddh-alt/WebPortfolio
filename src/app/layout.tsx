@@ -1,32 +1,44 @@
-import type { Metadata } from 'next'
-import './globals.css'
-import GameWorld from '@/components/GameWorld'
+import type { Metadata } from "next";
+import { Instrument_Serif } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
+import "./globals.css";
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-instrument",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: 'Pixel Portfolio | Software Engineer',
-  description: 'Interactive pixelated portfolio of a software engineer showcasing projects, experiences, and achievements in a retro gaming style.',
-  keywords: 'software engineer, portfolio, web developer, pixel art, retro gaming',
-  authors: [{ name: 'Your Name' }],
-}
+  title: "Aniruddhan Ramesh",
+  description:
+    "CS @ University of Cincinnati. ML Engineer at Oumi. Building open-source AI tooling.",
+  keywords:
+    "Aniruddhan Ramesh, machine learning, Oumi, open source, University of Cincinnati, computer science, NeurIPS",
+  authors: [{ name: "Aniruddhan Ramesh" }],
+};
 
 export const viewport = {
-  width: 'device-width',
+  width: "device-width",
   initialScale: 1,
-}
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className="antialiased text-pixel-black min-h-screen">
-        <GameWorld />
-        <div className="min-h-screen relative z-10">
-          {children}
-        </div>
+    <html
+      lang="en"
+      className={`${instrumentSerif.variable} ${GeistSans.variable} ${GeistMono.variable}`}
+    >
+      <body className="font-sans antialiased bg-surface-0 text-zinc-50 min-h-screen">
+        <div className="noise" />
+        {children}
       </body>
     </html>
-  )
+  );
 }

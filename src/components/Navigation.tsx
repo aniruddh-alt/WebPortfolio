@@ -1,153 +1,123 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
-import PixelButton from './PixelButton'
-import PixelText from './PixelText'
 
 const navItems = [
-  { name: 'Home', href: '#hero' },
-  { name: 'Experience', href: '#experience' },
-  { name: 'Projects', href: '#projects' },
-  { name: 'Achievements', href: '#achievements' },
-  { name: 'Publications', href: '#publications' },
-  { name: 'Research', href: '#research' },
-  { name: 'UHP', href: '#uhp' },
-  { name: 'Reviews', href: '#reviews' },
-  { name: 'Fun Stuff', href: '#fun' },
+  { label: 'About', href: '#about' },
+  { label: 'Experience', href: '#experience' },
+  { label: 'Publications', href: '#publications' },
+  { label: 'Projects', href: '#projects' },
+  { label: 'Contact', href: '#contact' },
 ]
 
 export default function Navigation() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState('hero')
+  const [scrolled, setScrolled] = useState(false)
+  const [open, setOpen] = useState(false)
+  const { scrollY } = useScroll()
+
+  // Raw transforms from scroll position
+  const rawOpacity = useTransform(scrollY, [20, 160], [1, 0])
+  const rawWidth = useTransform(scrollY, [20, 160], [150, 0])
+
+  // Spring physics for that heavy, satisfying inertia
+  const springConfig = { stiffness: 80, damping: 20, mass: 1.2 }
+  const tailOpacity = useSpring(rawOpacity, springConfig)
+  const tailMaxWidth = useSpring(rawWidth, springConfig)
 
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = navItems.map(item => item.href.slice(1))
-      const scrollPosition = window.scrollY + 100
-
-      for (const section of sections) {
-        const element = document.getElementById(section)
-        if (element) {
-          const { offsetTop, offsetHeight } = element
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section)
-            break
-          }
-        }
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    const onScroll = () => setScrolled(window.scrollY > 40)
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const scrollToSection = (href: string) => {
-    const element = document.getElementById(href.slice(1))
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
-    setIsOpen(false)
-  }
-
   return (
-    <>
-      {/* Desktop Navigation */}
-      <motion.nav
-        className="fixed top-0 left-0 right-0 z-50 bg-dark-bg/90 backdrop-blur-md border-b-2 border-pixel-green"
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <motion.div
-              className="flex-shrink-0"
-              whileHover={{ scale: 1.05 }}
-            >
-              <PixelText variant="h3">
-                {'<DEV/>'}
-              </PixelText>
-            </motion.div>
-
-            {/* Desktop Menu */}
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4">
-                {navItems.map((item, index) => (
-                  <motion.button
-                    key={item.name}
-                    onClick={() => scrollToSection(item.href)}
-                    className={`px-3 py-2 text-sm font-pixel transition-all duration-200 ${
-                      activeSection === item.href.slice(1)
-                        ? 'text-pixel-green border-b-2 border-pixel-green'
-                        : 'text-gray-400 hover:text-pixel-green'
-                    }`}
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
-                    whileHover={{ scale: 1.1 }}
-                  >
-                    {item.name}
-                  </motion.button>
-                ))}
-              </div>
-            </div>
-
-            {/* Mobile menu button */}
-            <div className="md:hidden">
-              <PixelButton
-                onClick={() => setIsOpen(!isOpen)}
-                size="sm"
-                variant="secondary"
-              >
-                {isOpen ? <X size={16} /> : <Menu size={16} />}
-              </PixelButton>
-            </div>
-          </div>
-        </div>
-      </motion.nav>
-
-      {/* Mobile Navigation */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            className="fixed inset-0 z-40 md:hidden"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+    <motion.nav
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, delay: 0.1 }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled ? 'bg-surface-0/70 backdrop-blur-2xl border-b border-zinc-800/60' : ''
+      }`}
+    >
+      <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
+        <a
+          href="#"
+          className="font-serif text-xl text-zinc-50 hover:text-zinc-300 transition-colors flex items-baseline"
+        >
+          <span>A</span>
+          <motion.span
+            style={{
+              opacity: tailOpacity,
+              maxWidth: tailMaxWidth,
+            }}
+            className="inline-block overflow-hidden whitespace-nowrap"
           >
-            <div className="fixed inset-0 bg-dark-bg/95 backdrop-blur-md" />
-            <motion.div
-              className="fixed top-16 left-0 right-0 bg-dark-surface border-2 border-pixel-green mx-4 rounded-lg"
-              initial={{ y: -300, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -300, opacity: 0 }}
-              transition={{ duration: 0.3 }}
+            niruddhan
+          </motion.span>
+        </a>
+
+        <div className="hidden md:flex items-center gap-7">
+          {navItems.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className="text-[13px] text-zinc-500 hover:text-zinc-200 transition-colors tracking-wide"
             >
-              <div className="px-2 pt-2 pb-3 space-y-1">
-                {navItems.map((item, index) => (
-                  <motion.button
-                    key={item.name}
-                    onClick={() => scrollToSection(item.href)}
-                    className={`block w-full text-left px-3 py-2 text-base font-pixel transition-all duration-200 ${
-                      activeSection === item.href.slice(1)
-                        ? 'text-pixel-green bg-pixel-green/10 border-l-4 border-pixel-green'
-                        : 'text-gray-400 hover:text-pixel-green hover:bg-pixel-green/5'
-                    }`}
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
-                  >
-                    {item.name}
-                  </motion.button>
-                ))}
-              </div>
-            </motion.div>
+              {item.label}
+            </a>
+          ))}
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[13px] text-zinc-500 hover:text-zinc-200 transition-colors tracking-wide border border-zinc-800 rounded-full px-3 py-1 hover:border-zinc-600"
+          >
+            Resume
+          </a>
+        </div>
+
+        <button
+          onClick={() => setOpen(!open)}
+          className="md:hidden text-zinc-500 hover:text-zinc-200 transition-colors"
+        >
+          {open ? <X size={18} /> : <Menu size={18} />}
+        </button>
+      </div>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-surface-0/95 backdrop-blur-2xl border-b border-zinc-800/60 overflow-hidden"
+          >
+            <div className="px-6 py-4 flex flex-col gap-3">
+              {navItems.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setOpen(false)}
+                  className="text-sm text-zinc-500 hover:text-zinc-200 transition-colors"
+                >
+                  {item.label}
+                </a>
+              ))}
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setOpen(false)}
+                className="text-sm text-zinc-500 hover:text-zinc-200 transition-colors"
+              >
+                Resume
+              </a>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </motion.nav>
   )
 }

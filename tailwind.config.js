@@ -7,35 +7,40 @@ module.exports = {
   ],
   theme: {
     extend: {
-      fontFamily: {
-        'pixel': ['VT323', 'Press Start 2P', 'Courier New', 'monospace'],
-        'pixel-title': ['Press Start 2P', 'monospace'],
-      },
       colors: {
-        'sky-light': '#87CEEB',
-        'sky-medium': '#4682B4', 
-        'sky-dark': '#2F4F4F',
-        'grass-green': '#32CD32',
-        'dirt-brown': '#8B4513',
-        'pixel-white': '#FFFFFF',
-        'pixel-black': '#000000',
-        'pixel-red': '#FF0000',
-        'pixel-blue': '#0000FF',
-        'pixel-yellow': '#FFFF00',
+        surface: {
+          0: '#09090b',
+          1: '#111113',
+          2: '#18181b',
+          3: '#1f1f23',
+          4: '#27272a',
+        },
+        zinc: {
+          50: '#fafafa',
+          100: '#f4f4f5',
+          200: '#e4e4e7',
+          300: '#d4d4d8',
+          400: '#a1a1aa',
+          500: '#71717a',
+          600: '#52525b',
+          700: '#3f3f46',
+          800: '#27272a',
+          900: '#18181b',
+          950: '#09090b',
+        },
+        accent: {
+          cyan: '#06b6d4',
+          blue: '#3b82f6',
+          violet: '#8b5cf6',
+          amber: '#f59e0b',
+          rose: '#f43f5e',
+        },
       },
-      animation: {
-        'float': 'float 3s ease-in-out infinite',
+      fontFamily: {
+        serif: ['var(--font-instrument)', 'Georgia', 'serif'],
+        sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-geist-mono)', 'monospace'],
       },
-      keyframes: {
-        float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-10px)' }
-        }
-      },
-      boxShadow: {
-        'pixel': '3px 3px 0 rgba(0,0,0,0.3)',
-        'pixel-lg': '5px 5px 0 rgba(0,0,0,0.3)',
-      }
     },
   },
   plugins: [],
