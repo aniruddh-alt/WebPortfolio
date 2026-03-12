@@ -19,12 +19,18 @@ export default function Navigation() {
 
   // Raw transforms from scroll position
   const rawOpacity = useTransform(scrollY, [20, 160], [1, 0])
-  const rawWidth = useTransform(scrollY, [20, 160], [150, 0])
+  const rawFirstWidth = useTransform(scrollY, [20, 160], [150, 0])
+  const rawLastWidth = useTransform(scrollY, [20, 160], [100, 0])
 
   // Spring physics for that heavy, satisfying inertia
   const springConfig = { stiffness: 80, damping: 20, mass: 1.2 }
   const tailOpacity = useSpring(rawOpacity, springConfig)
-  const tailMaxWidth = useSpring(rawWidth, springConfig)
+  const firstTailWidth = useSpring(rawFirstWidth, springConfig)
+  const lastTailWidth = useSpring(rawLastWidth, springConfig)
+
+  // Space between first and last name collapses too
+  const rawSpaceWidth = useTransform(scrollY, [20, 120], [6, 0])
+  const spaceWidth = useSpring(rawSpaceWidth, springConfig)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -50,11 +56,25 @@ export default function Navigation() {
           <motion.span
             style={{
               opacity: tailOpacity,
-              maxWidth: tailMaxWidth,
+              maxWidth: firstTailWidth,
             }}
             className="inline-block overflow-hidden whitespace-nowrap"
           >
             niruddhan
+          </motion.span>
+          <motion.span
+            style={{ width: spaceWidth }}
+            className="inline-block flex-shrink-0"
+          />
+          <span>R</span>
+          <motion.span
+            style={{
+              opacity: tailOpacity,
+              maxWidth: lastTailWidth,
+            }}
+            className="inline-block overflow-hidden whitespace-nowrap"
+          >
+            amesh
           </motion.span>
         </a>
 
