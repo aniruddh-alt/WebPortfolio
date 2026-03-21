@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 
@@ -9,6 +10,7 @@ const navItems = [
   { label: 'Experience', href: '#experience' },
   { label: 'Publications', href: '#publications' },
   { label: 'Projects', href: '#projects' },
+  { label: 'Honors', href: '/honors' },
   { label: 'Contact', href: '#contact' },
 ]
 
@@ -16,6 +18,8 @@ export default function Navigation() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const { scrollY } = useScroll()
+  const pathname = usePathname()
+  const isHome = pathname === '/'
 
   // Raw transforms from scroll position
   const rawOpacity = useTransform(scrollY, [20, 160], [1, 0])
@@ -49,7 +53,7 @@ export default function Navigation() {
     >
       <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
         <a
-          href="#"
+          href="/"
           className="font-serif text-xl text-zinc-50 hover:text-zinc-300 transition-colors flex items-baseline"
         >
           <span>A</span>
@@ -79,15 +83,25 @@ export default function Navigation() {
         </a>
 
         <div className="hidden md:flex items-center gap-7">
-          {navItems.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="text-[13px] text-zinc-500 hover:text-zinc-200 transition-colors tracking-wide"
-            >
-              {item.label}
-            </a>
-          ))}
+          {navItems.map((item) => {
+            const href = item.href.startsWith('#') && !isHome
+              ? `/${item.href}`
+              : item.href
+            const isActive = !item.href.startsWith('#') && pathname.startsWith(item.href)
+            return (
+              <a
+                key={item.href}
+                href={href}
+                className={`text-[13px] transition-colors tracking-wide ${
+                  isActive
+                    ? 'text-zinc-200'
+                    : 'text-zinc-500 hover:text-zinc-200'
+                }`}
+              >
+                {item.label}
+              </a>
+            )
+          })}
           <a
             href="/resume.pdf"
             target="_blank"
@@ -115,16 +129,21 @@ export default function Navigation() {
             className="md:hidden bg-surface-0/95 backdrop-blur-2xl border-b border-zinc-800/60 overflow-hidden"
           >
             <div className="px-6 py-4 flex flex-col gap-3">
-              {navItems.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  className="text-sm text-zinc-500 hover:text-zinc-200 transition-colors"
-                >
-                  {item.label}
-                </a>
-              ))}
+              {navItems.map((item) => {
+                const href = item.href.startsWith('#') && !isHome
+                  ? `/${item.href}`
+                  : item.href
+                return (
+                  <a
+                    key={item.href}
+                    href={href}
+                    onClick={() => setOpen(false)}
+                    className="text-sm text-zinc-500 hover:text-zinc-200 transition-colors"
+                  >
+                    {item.label}
+                  </a>
+                )
+              })}
               <a
                 href="/resume.pdf"
                 target="_blank"
