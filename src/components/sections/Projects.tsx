@@ -85,7 +85,7 @@ export default function Projects() {
     (async () => {
       try {
         const res = await fetch(
-          `https://api.github.com/search/issues?q=author:${GITHUB_USERNAME}+type:pr&sort=created&order=desc&per_page=100`,
+          `https://api.github.com/search/issues?q=author:${GITHUB_USERNAME}+type:pr+base:main&sort=created&order=desc&per_page=100`,
           { headers: { Accept: "application/vnd.github.v3+json" } }
         );
         if (!res.ok) return;
