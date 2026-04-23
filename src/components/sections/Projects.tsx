@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, GitMerge, GitPullRequest } from "lucide-react";
 
 const GITHUB_USERNAME = "aniruddh-alt";
@@ -15,52 +15,68 @@ interface PR {
 
 const projects = [
   {
-    title: "PhizzIO",
+    title: "linear_probes",
     description:
-      "CV-powered physical therapy app — watches you do exercises and tells you if your form is off. Took 2nd at RevolutionUC.",
-    tags: ["JavaScript", "Computer Vision", "Healthcare"],
-    href: "https://github.com/aniruddh-alt/PhizzIO_RevUC",
+      "A mech interp toolkit I keep reaching for. Pulls activations from any transformer layer with flexible selector syntax, runs linear probes with proper train/val/test hygiene, sweeps layers. Every probe experiment I run starts here.",
+    tags: ["Python", "PyTorch", "Mech Interp", "Research"],
+    href: "https://github.com/aniruddh-alt/linear_probes",
     color: "cyan",
   },
   {
     title: "Oumi Platform",
     description:
-      "My open-source contributions to Oumi — inference engines, eval tooling, synthetic data, and more.",
+      "My open-source work on Oumi: training configs, inference engines, eval tooling, synthetic data pipelines, and the MCP server I'm building on top of it all.",
     tags: ["Python", "PyTorch", "Open Source", "MLOps"],
     href: "https://github.com/oumi-ai/oumi",
     color: "violet",
   },
   {
-    title: "ctrlFind",
+    title: "PhizzIO",
     description:
-      "Search your codebase with plain English. Built in Rust — embeds code into vectors and finds what you're looking for with cosine similarity.",
-    tags: ["Rust", "Embeddings", "Search", "CLI"],
-    href: "https://github.com/aniruddh-alt/ctrlFind",
-    color: "amber",
-  },
-  {
-    title: "GraphRag",
-    description:
-      "RAG but with a knowledge graph instead of flat chunks. Built for searching research papers where context and connections between ideas matter.",
-    tags: ["Python", "RAG", "NLP", "Knowledge Graphs"],
-    href: "https://github.com/aniruddh-alt/GraphRag",
+      "CV-powered physical therapy app. Watches you do the exercises, flags when your form slips. Won Launch It: Cincy ($28K+) and placed 2nd at RevolutionUC.",
+    tags: ["JavaScript", "Computer Vision", "Healthcare"],
+    href: "https://github.com/aniruddh-alt/PhizzIO_RevUC",
     color: "rose",
   },
   {
     title: "Mridangam Transcription",
     description:
-      "Listens to mridangam (South Indian drum) recordings and transcribes the stroke patterns. A niche problem I cared about solving.",
-    tags: ["Python", "Audio ML", "Signal Processing"],
+      "A CNN with attention that transcribes stroke patterns from mridangam recordings. The mridangam is the South Indian drum I grew up around; I wanted a solver for a dataset that barely exists.",
+    tags: ["Python", "Audio ML", "CNN + Attention"],
     href: "https://github.com/aniruddh-alt/MridangamTranscription",
     color: "emerald",
   },
   {
-    title: "Clinical Notes",
+    title: "ctrlFind",
     description:
-      "Takes long, messy clinical notes and pulls out what actually matters for the patient and their doctor.",
-    tags: ["Python", "NLP", "Healthcare", "Summarization"],
-    href: "https://github.com/aniruddh-alt/ClinicalNotes",
+      "Codebase search in plain English. Written in Rust. Embeds the code, runs cosine similarity, hands you back the thing you half-remember writing.",
+    tags: ["Rust", "Embeddings", "Search", "CLI"],
+    href: "https://github.com/aniruddh-alt/ctrlFind",
+    color: "amber",
+  },
+  {
+    title: "BuildGPT",
+    description:
+      "A small GPT written from the ground up. Not novel work; a forcing function to make sure I could explain every line before trusting anything larger.",
+    tags: ["Python", "PyTorch", "From Scratch"],
+    href: "https://github.com/aniruddh-alt/BuildGPT",
     color: "sky",
+  },
+  {
+    title: "GraphRag",
+    description:
+      "RAG with a knowledge graph underneath instead of flat chunks. Built it after losing one too many research ideas that lived in the connection between papers, not any one sentence.",
+    tags: ["Python", "RAG", "NLP", "Knowledge Graphs"],
+    href: "https://github.com/aniruddh-alt/GraphRag",
+    color: "violet",
+  },
+  {
+    title: "MNIST from Scratch",
+    description:
+      "Three implementations side by side: stock PyTorch, hand-coded from the math with no frameworks, and a custom reimplementation of the PyTorch API. 96% accuracy across all three. Built to understand backprop at the level of the math, not the library.",
+    tags: ["Python", "PyTorch", "Fundamentals"],
+    href: "https://github.com/aniruddh-alt/MNIST-NeuralNetwork_From_Scratch",
+    color: "amber",
   },
 ];
 
@@ -79,6 +95,7 @@ function repoKey(href: string): string | null {
 }
 
 export default function Projects() {
+  const prefersReducedMotion = useReducedMotion();
   const [prsByRepo, setPrsByRepo] = useState<Record<string, PR[]>>({});
 
   useEffect(() => {
@@ -126,17 +143,17 @@ export default function Projects() {
     <section id="projects" className="py-28 relative">
       <div className="max-w-5xl mx-auto px-6">
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
+          whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
           className="mb-14"
         >
-          <p className="font-mono text-[13px] text-zinc-500 mb-4 tracking-wider">
-            Projects
+          <p className="section-index mb-4">
+            05 <em>—</em> Projects
           </p>
           <h2 className="font-serif text-3xl sm:text-4xl leading-tight text-zinc-50">
-            Things I&apos;ve shipped
+            Selected side projects
           </h2>
         </motion.div>
 
@@ -151,8 +168,8 @@ export default function Projects() {
                 href={project.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
+                whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.08 }}
                 className="group card p-7 flex flex-col relative overflow-hidden cursor-pointer"
@@ -170,19 +187,19 @@ export default function Projects() {
                   </h3>
                   <ArrowUpRight
                     size={15}
-                    className="text-zinc-600 group-hover:text-zinc-300 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 flex-shrink-0 ml-3 mt-0.5"
+                    className="text-zinc-500 group-hover:text-zinc-200 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 flex-shrink-0 ml-3 mt-0.5"
                     strokeWidth={1.5}
                   />
                 </div>
 
-                <p className="text-[13px] text-zinc-500 leading-relaxed mb-5 flex-1">
+                <p className="text-[13px] text-zinc-400 leading-relaxed mb-5 flex-1">
                   {project.description}
                 </p>
 
                 {prs && prs.length > 0 && (
                   <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
+                    initial={prefersReducedMotion ? false : { opacity: 0 }}
+                    animate={prefersReducedMotion ? undefined : { opacity: 1 }}
                     transition={{ duration: 0.4 }}
                     className="mb-5 flex flex-col gap-1.5"
                   >
@@ -194,7 +211,7 @@ export default function Projects() {
                           e.stopPropagation();
                           window.open(pr.url, "_blank", "noopener,noreferrer");
                         }}
-                        className="flex items-center gap-2 text-[12px] font-mono text-zinc-600 hover:text-zinc-300 transition-colors cursor-pointer"
+                        className="flex items-center gap-2 text-[12px] font-mono text-zinc-500 hover:text-zinc-200 transition-colors cursor-pointer"
                       >
                         {pr.merged ? (
                           <GitMerge

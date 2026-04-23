@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
 
 const links = [
@@ -11,24 +11,27 @@ const links = [
 ]
 
 export default function Footer() {
+  const prefersReducedMotion = useReducedMotion()
   return (
     <section id="contact" className="py-28 relative">
       <div className="max-w-5xl mx-auto px-6">
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
+          whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
           className="mb-20"
         >
-          <p className="font-mono text-[13px] text-zinc-500 mb-4 tracking-wider">
-            Contact
+          <p className="section-index mb-4">
+            06 <em>—</em> Contact
           </p>
           <h2 className="font-serif text-3xl sm:text-4xl leading-tight text-zinc-50 mb-6">
-            Let&apos;s talk
+            Get in touch
           </h2>
-          <p className="text-zinc-500 max-w-md leading-relaxed mb-8">
-            Happy to chat about ML research, open-source, startups, or whatever you&apos;re working on.
+          <p className="text-zinc-400 max-w-md leading-relaxed mb-8">
+            I&apos;m always happy to talk about interpretability, open-source ML
+            infrastructure, startups, mridangam, or whatever you&apos;re working
+            on. My inbox is open.
           </p>
           <a
             href="mailto:rameshad@mail.uc.edu"
@@ -39,7 +42,7 @@ export default function Footer() {
             </span>
             <ArrowUpRight
               size={16}
-              className="text-zinc-500 group-hover:text-zinc-200 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              className="text-zinc-400 group-hover:text-zinc-100 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               strokeWidth={1.5}
             />
           </a>
@@ -48,7 +51,7 @@ export default function Footer() {
         {/* Footer bar */}
         <div className="divider" />
         <div className="pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <span className="text-[12px] text-zinc-600 font-mono tracking-wider">
+          <span className="text-[12px] text-zinc-500 font-mono tracking-wider">
             Aniruddhan Ramesh · {new Date().getFullYear()}
           </span>
           <div className="flex items-center gap-5">
@@ -58,7 +61,7 @@ export default function Footer() {
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[12px] text-zinc-600 hover:text-zinc-400 transition-colors font-mono tracking-wider"
+                className="text-[12px] text-zinc-500 hover:text-zinc-200 transition-colors font-mono tracking-wider"
               >
                 {link.label}
               </a>
