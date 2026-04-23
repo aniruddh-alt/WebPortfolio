@@ -11,18 +11,55 @@ const instrumentSerif = Instrument_Serif({
   display: "swap",
 });
 
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://aniruddhan.vercel.app";
+const DESCRIPTION =
+  "Aniruddhan Ramesh — machine learning engineer at Oumi. Research on the inside of language models, open-source tooling for foundation models, and applied ML across clinical, audio, and real-estate domains.";
+
 export const metadata: Metadata = {
-  title: "Aniruddhan Ramesh",
-  description:
-    "CS @ University of Cincinnati. ML Engineer at Oumi. Building open-source AI tooling.",
-  keywords:
-    "Aniruddhan Ramesh, machine learning, Oumi, open source, University of Cincinnati, computer science, NeurIPS",
-  authors: [{ name: "Aniruddhan Ramesh" }],
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Aniruddhan Ramesh",
+    template: "%s · Aniruddhan Ramesh",
+  },
+  description: DESCRIPTION,
+  keywords: [
+    "Aniruddhan Ramesh",
+    "mechanistic interpretability",
+    "Oumi",
+    "NeurIPS",
+    "machine learning engineer",
+    "open source ML",
+    "University of Cincinnati",
+    "polysemanticity",
+    "interpretability",
+  ],
+  authors: [{ name: "Aniruddhan Ramesh", url: SITE_URL }],
+  creator: "Aniruddhan Ramesh",
+  openGraph: {
+    type: "website",
+    url: SITE_URL,
+    siteName: "Aniruddhan Ramesh",
+    title: "Aniruddhan Ramesh",
+    description: DESCRIPTION,
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Aniruddhan Ramesh",
+    description: DESCRIPTION,
+    creator: "@aniruddhr04",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export const viewport = {
   width: "device-width",
   initialScale: 1,
+  themeColor: "#09090b",
 };
 
 export default function RootLayout({
