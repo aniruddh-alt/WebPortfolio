@@ -1,53 +1,32 @@
-'use client'
-
-import { useParams } from 'next/navigation'
-import { motion } from 'framer-motion'
+import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
+import { MDXRemote } from 'next-mdx-remote/rsc'
 import {
   ArrowLeft,
   ArrowRight,
   Calendar,
   BookOpen,
-  ExternalLink,
-  Play,
 } from 'lucide-react'
-import { getEntryBySlug, honorsEntries } from '@/lib/honors-data'
+import { getAllHonorsEntries, getHonorsEntry } from '@/lib/honors-data'
 import Navigation from '@/components/Navigation'
 import NetworkBackground from '@/components/NetworkBackground'
+import { honorsMdxComponents } from '@/components/honors-mdx-components'
 
-export default function HonorsArticle() {
-  const { slug } = useParams<{ slug: string }>()
-  const entry = getEntryBySlug(slug)
+type Props = { params: { slug: string } }
 
+export default async function HonorsArticle({ params }: Props) {
+  const entry = await getHonorsEntry(params.slug)
   if (!entry) {
-    return (
-      <main className="relative">
-        <NetworkBackground />
-        <div className="relative z-10">
-          <Navigation />
-          <div className="pt-32 pb-20 max-w-3xl mx-auto px-6 text-center">
-            <h1 className="font-serif text-3xl text-zinc-50 mb-4">
-              Not found
-            </h1>
-            <Link
-              href="/honors"
-              className="text-zinc-500 hover:text-zinc-300 transition-colors text-sm"
-            >
-              Back to Honors Portfolio
-            </Link>
-          </div>
-        </div>
-      </main>
-    )
+    notFound()
   }
 
-  // Find prev/next entries for navigation
-  const currentIndex = honorsEntries.findIndex((e) => e.slug === slug)
-  const prev = currentIndex > 0 ? honorsEntries[currentIndex - 1] : null
+  const allEntries = await getAllHonorsEntries()
+  const currentIndex = allEntries.findIndex((e) => e.slug === params.slug)
+  const prev = currentIndex > 0 ? allEntries[currentIndex - 1] : null
   const next =
-    currentIndex < honorsEntries.length - 1
-      ? honorsEntries[currentIndex + 1]
+    currentIndex < allEntries.length - 1
+      ? allEntries[currentIndex + 1]
       : null
 
   const isReview = entry.category === 'year-in-review'
@@ -61,11 +40,7 @@ export default function HonorsArticle() {
         {/* Article header */}
         <article className="pt-32 pb-8">
           <div className="max-w-3xl mx-auto px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
+            <div>
               <Link
                 href="/honors"
                 className="inline-flex items-center gap-2 text-zinc-500 hover:text-zinc-300 transition-colors text-sm mb-10 group"
@@ -117,7 +92,7 @@ export default function HonorsArticle() {
                   </span>
                 ))}
               </div>
-            </motion.div>
+            </div>
           </div>
         </article>
 
@@ -126,35 +101,16 @@ export default function HonorsArticle() {
         {/* Article body */}
         <section className="py-12">
           <div className="max-w-3xl mx-auto px-6">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="space-y-6"
-            >
-              {entry.content.map((paragraph, i) => (
-                <motion.p
-                  key={i}
-                  initial={{ opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.03 }}
-                  className="text-zinc-400 leading-[1.8] text-[15px]"
-                >
-                  {paragraph}
-                </motion.p>
-              ))}
-            </motion.div>
+            <div className="honors-mdx">
+              <MDXRemote
+                source={entry.body}
+                components={honorsMdxComponents}
+              />
+            </div>
 
             {/* Video embed */}
             {entry.videoUrl && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-                className="mt-12"
-              >
+              <div className="mt-12">
                 <div className="card overflow-hidden">
                   <div className="aspect-video relative">
                     <iframe
@@ -169,22 +125,15 @@ export default function HonorsArticle() {
                 <p className="text-[12px] text-zinc-600 mt-3 text-center font-mono">
                   Video demonstration of the prototype
                 </p>
-              </motion.div>
+              </div>
             )}
 
             {/* Images */}
             {entry.images && entry.images.length > 0 && (
               <div className="mt-14 space-y-8">
                 <div className="divider" />
-                {entry.images.map((img, i) => (
-                  <motion.figure
-                    key={img.src}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: i * 0.1 }}
-                    className="group"
-                  >
+                {entry.images.map((img) => (
+                  <figure key={img.src} className="group">
                     <div className="card overflow-hidden">
                       <div className="relative aspect-[16/10] bg-surface-2">
                         <Image
@@ -201,7 +150,7 @@ export default function HonorsArticle() {
                         {img.caption}
                       </figcaption>
                     )}
-                  </motion.figure>
+                  </figure>
                 ))}
               </div>
             )}

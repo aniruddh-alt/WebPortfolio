@@ -10,6 +10,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Offset so anchor jumps clear the h-14 fixed nav with breathing room. */
+  scroll-padding-top: 5rem;
 }
 
 body {
@@ -22,6 +24,39 @@ body {
 ::selection {
   background: rgba(139, 92, 246, 0.25);
   color: #fafafa;
+}
+
+/* Keyboard focus — invisible for mouse users, visible for keyboard.
+   Subtle zinc ring + faint glow that works across every surface. */
+:focus {
+  outline: none;
+}
+:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px #09090b,
+    0 0 0 3px rgba(161, 161, 170, 0.7);
+  border-radius: 4px;
+}
+/* Rounded surfaces (cards, pills) deserve matching focus radii. */
+.card:focus-visible,
+.tag:focus-visible {
+  border-radius: 16px;
+}
+
+/* Respect prefers-reduced-motion globally. Framer Motion components
+   opt in via useReducedMotion(); this handles CSS-driven motion. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Scrollbar — razor thin */
@@ -41,12 +76,33 @@ body {
 
 /* ---- Utility classes ---- */
 
-/* Gradient text: cyan → violet */
-.gradient-text {
-  background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* Section index label: "01 — About" */
+.section-index {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: #a1a1aa;
+  text-transform: uppercase;
+}
+.section-index em {
+  color: #52525b;
+  font-style: normal;
+  padding: 0 0.5em;
+}
+
+/* Tag pill */
+.tag {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  border: 1px solid #3f3f46;
+  color: #a1a1aa;
+  transition: border-color 0.2s, color 0.2s;
+}
+.tag:hover,
+.group:hover .tag {
+  border-color: #52525b;
+  color: #d4d4d8;
 }
 
 /* Subtle noise overlay for texture */
@@ -90,17 +146,10 @@ body {
   opacity: 0.07;
 }
 
-/* Tag pill */
-.tag {
-  font-size: 0.75rem;
-  padding: 0.25rem 0.625rem;
-  border-radius: 9999px;
-  border: 1px solid #27272a;
-  color: #71717a;
-  transition: border-color 0.2s, color 0.2s;
-}
-.tag:hover,
-.group:hover .tag {
-  border-color: #3f3f46;
-  color: #a1a1aa;
+/* Gradient text (used on /honors hero) */
+.gradient-text {
+  background: linear-gradient(135deg, #22d3ee 0%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
