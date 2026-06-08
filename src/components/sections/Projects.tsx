@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowUpRight, GitMerge, GitPullRequest } from "lucide-react";
+import { ArrowUpRight, ChevronDown, GitMerge, GitPullRequest } from "lucide-react";
 
 const GITHUB_USERNAME = "aniruddh-alt";
-const MAX_PRS = 5;
+const INITIAL_PROJECTS = 4;
 
 interface PR {
   title: string;
@@ -97,6 +97,9 @@ function repoKey(href: string): string | null {
 export default function Projects() {
   const prefersReducedMotion = useReducedMotion();
   const [prsByRepo, setPrsByRepo] = useState<Record<string, PR[]>>({});
+  const [showAll, setShowAll] = useState(false);
+  const visibleProjects = showAll ? projects : projects.slice(0, INITIAL_PROJECTS);
+  const hiddenCount = projects.length - INITIAL_PROJECTS;
 
   useEffect(() => {
     (async () => {
@@ -126,13 +129,11 @@ export default function Projects() {
           });
         }
 
-        const grouped: Record<string, PR[]> = {};
-        for (const [key, prs] of Object.entries(all)) {
+        for (const prs of Object.values(all)) {
           prs.sort((a, b) => (a.merged === b.merged ? 0 : a.merged ? -1 : 1));
-          grouped[key] = prs.slice(0, MAX_PRS);
         }
 
-        setPrsByRepo(grouped);
+        setPrsByRepo(all);
       } catch {
         /* graceful degradation — cards render without PRs */
       }
@@ -158,7 +159,7 @@ export default function Projects() {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {projects.map((project, i) => {
+          {visibleProjects.map((project, i) => {
             const key = repoKey(project.href);
             const prs = key ? prsByRepo[key] : undefined;
 
@@ -201,7 +202,7 @@ export default function Projects() {
                     initial={prefersReducedMotion ? false : { opacity: 0 }}
                     animate={prefersReducedMotion ? undefined : { opacity: 1 }}
                     transition={{ duration: 0.4 }}
-                    className="mb-5 flex flex-col gap-1.5"
+                    className="mb-5 flex flex-col gap-1.5 max-h-32 overflow-y-auto pr-2"
                   >
                     {prs.map((pr) => (
                       <span
@@ -243,6 +244,24 @@ export default function Projects() {
             );
           })}
         </div>
+
+        {hiddenCount > 0 && (
+          <div className="mt-12 flex justify-center">
+            <button
+              onClick={() => setShowAll((v) => !v)}
+              aria-expanded={showAll}
+              aria-controls="projects"
+              className="group flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-zinc-800 hover:border-zinc-600 text-[11px] font-mono uppercase tracking-[0.12em] text-zinc-400 hover:text-zinc-100 transition-colors"
+            >
+              <span>{showAll ? "Show less" : `View ${hiddenCount} more`}</span>
+              <ChevronDown
+                size={13}
+                strokeWidth={1.5}
+                className={`transition-transform duration-300 ${showAll ? "rotate-180" : ""}`}
+              />
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
