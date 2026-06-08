@@ -250,8 +250,7 @@ export default function Projects() {
             <button
               onClick={() => setShowAll((v) => !v)}
               aria-expanded={showAll}
-              aria-controls="projects"
-              className="group flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-zinc-800 hover:border-zinc-600 text-[11px] font-mono uppercase tracking-[0.12em] text-zinc-400 hover:text-zinc-100 transition-colors"
+              className="flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-zinc-800 hover:border-zinc-600 text-[11px] font-mono uppercase tracking-[0.12em] text-zinc-400 hover:text-zinc-100 transition-colors"
             >
               <span>{showAll ? "Show less" : `View ${hiddenCount} more`}</span>
               <ChevronDown
