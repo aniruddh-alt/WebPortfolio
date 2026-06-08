@@ -15,6 +15,7 @@ import {
 } from 'lucide-react'
 
 const awards = [
+  { year: '2026', title: 'Mantei / Mae Scholarship', org: 'Academic Achievement', icon: GraduationCap, tint: '#8b5cf6' },
   { year: '2025', title: 'Best Undergraduate Student', org: 'UC Computer Science', icon: Award, tint: '#f59e0b' },
   { year: '2025', title: 'NeurIPS Mech Interp Workshop', org: 'Paper Accepted', icon: Sparkles, tint: '#06b6d4' },
   { year: '2024', title: 'Excellence in Research Communication', org: 'UC College of Medicine', icon: Presentation, tint: '#06b6d4' },
