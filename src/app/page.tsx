@@ -1,29 +1,23 @@
-'use client'
-
-import Navigation from '@/components/Navigation'
-import NetworkBackground from '@/components/NetworkBackground'
+import Header from '@/components/Header'
 import Hero from '@/components/sections/Hero'
-import About from '@/components/sections/About'
 import Experience from '@/components/sections/Experience'
 import Publications from '@/components/sections/Publications'
-import Awards from '@/components/sections/Awards'
 import Projects from '@/components/sections/Projects'
+import Service from '@/components/sections/Service'
+import Awards from '@/components/sections/Awards'
 import Footer from '@/components/Footer'
 
 export default function Home() {
   return (
-    <main className="relative">
-      <NetworkBackground />
-      <div className="relative z-10">
-        <Navigation />
-        <Hero />
-        <About />
-        <Experience />
-        <Publications />
-        <Awards />
-        <Projects />
-        <Footer />
-      </div>
+    <main className="max-w-[42rem] mx-auto px-5">
+      <Header home />
+      <Hero />
+      <Experience />
+      <Publications />
+      <Projects />
+      <Service />
+      <Awards />
+      <Footer />
     </main>
   )
 }

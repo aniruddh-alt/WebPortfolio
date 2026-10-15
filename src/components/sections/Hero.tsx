@@ -1,92 +1,55 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
+const links = [
+  { label: 'rameshad@mail.uc.edu', href: 'mailto:rameshad@mail.uc.edu' },
+  { label: 'Google Scholar', href: 'https://scholar.google.com/citations?user=yscdiBoAAAAJ' },
+  { label: 'GitHub', href: 'https://github.com/aniruddh-alt' },
+  { label: 'Hugging Face', href: 'https://huggingface.co/aniruddhr04' },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/aniruddhanramesh' },
+  { label: 'X', href: 'https://x.com/aniruddhr04' },
+]
 
 export default function Hero() {
-  const prefersReducedMotion = useReducedMotion();
   return (
-    <section className="relative min-h-[100dvh] flex flex-col justify-center">
-      <div className="max-w-5xl mx-auto px-6 w-full relative z-10">
-        <motion.p
-          initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
-          animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="font-mono text-[13px] text-zinc-500 mb-8 tracking-wider"
-        >
-          Abu Dhabi &rarr; Cincinnati &rarr; Seattle &middot; Currently at Oumi
-        </motion.p>
-
-        <motion.h1
-          initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
-          animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="font-serif text-[clamp(3rem,8vw,6.5rem)] leading-[0.95] tracking-tight mb-8 text-zinc-50"
-        >
-          Aniruddhan
-          <br />
-          <span className="italic text-zinc-200">Ramesh</span>
-        </motion.h1>
-
-        <motion.p
-          initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
-          animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.55 }}
-          className="text-zinc-400 text-lg sm:text-xl leading-relaxed max-w-lg mb-12"
-        >
-          Most days I&apos;m trying to figure out{" "}
-          <span className="text-zinc-200">
-            what a language model is actually doing on the inside
-          </span>
-          . The rest of the time I build the open-source tooling that makes
-          that kind of work possible.
-        </motion.p>
-
-        <motion.div
-          initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
-          animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.65 }}
-          className="flex items-center gap-6"
-        >
-          <a
-            href="https://github.com/aniruddh-alt"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[13px] text-zinc-500 hover:text-zinc-200 transition-colors tracking-wide"
-          >
-            GitHub
-          </a>
-          <a
-            href="https://linkedin.com/in/aniruddhan-ramesh-7854a0221"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[13px] text-zinc-500 hover:text-zinc-200 transition-colors tracking-wide"
-          >
-            LinkedIn
-          </a>
-          <a
-            href="https://scholar.google.com/citations?user=yscdiBoAAAAJ"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[13px] text-zinc-500 hover:text-zinc-200 transition-colors tracking-wide"
-          >
-            Scholar
-          </a>
-          <a
-            href="https://x.com/aniruddhr04"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[13px] text-zinc-500 hover:text-zinc-200 transition-colors tracking-wide"
-          >
-            X
-          </a>
-          <a
-            href="mailto:rameshad@mail.uc.edu"
-            className="text-[13px] text-zinc-500 hover:text-zinc-200 transition-colors tracking-wide"
-          >
-            Email
-          </a>
-        </motion.div>
-      </div>
+    <section className="pt-12 sm:pt-16">
+      <p className="text-[21px] sm:text-[23px] leading-[1.5] tracking-[-0.005em]">
+        I work on AI safety. I use mechanistic interpretability to study how
+        safety alignment is represented inside language models and where it
+        breaks.
+      </p>
+      <p className="mt-6">
+        My current paper, a single-author submission under review at ICLR 2027,
+        diagnoses refusal failures in models given tool schemas. My first project in the field examined how polysemantic neurons emerge
+        and stabilize during training, and became a co-first-authored paper at
+        the NeurIPS 2025 Mechanistic Interpretability Workshop. As a machine
+        learning engineering intern at Oumi in 2026, I built open-source
+        training and interpretability tools. I also contributed to AURA-Eval, a
+        framework for evaluating whether LLM agents act with awareness of risk.
+        I set up the evaluations of open-source models, ran robustness checks
+        such as tests for judge bias, and helped define the paper’s
+        taxonomies. I was named an Outstanding Reviewer at the ICML 2026
+        Mechanistic Interpretability Workshop.
+      </p>
+      <p className="mt-5">
+        I grew up in Abu Dhabi and am completing a B.S. in Computer Science,
+        with a minor in Mathematics, at the University of Cincinnati (GPA
+        3.997, class of 2027). Outside research, I co-founded PhizzIO, a
+        computer-vision startup for physical therapy, and was managing partner
+        of Bearcat Ventures, the university’s $1M student-run venture fund.
+      </p>
+      <ul className="mt-8 font-sans text-[15px] text-accent flex flex-wrap gap-x-6 gap-y-2">
+        {links.map((link) => (
+          <li key={link.href}>
+            <a
+              href={link.href}
+              {...(link.href.startsWith('http')
+                ? { target: '_blank', rel: 'noopener noreferrer' }
+                : {})}
+              className="link"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
     </section>
-  );
+  )
 }

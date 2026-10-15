@@ -2,50 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+:root {
+  --paper: #fdfdfc;
+  --ink: #17181c;
+  --muted: #5d6270;
+  --rule: #e4e6ea;
+  --accent: #2d46d6;
+  /* Accent as RGB channels, for translucent fills like the selection. */
+  --hl: 45 70 214;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #131418;
+    --ink: #e8e9ed;
+    --muted: #9a9fab;
+    --rule: #2a2c33;
+    --accent: #94a3ff;
+    --hl: 120 140 255;
+    color-scheme: dark;
+  }
 }
 
 html {
   scroll-behavior: smooth;
-  /* Offset so anchor jumps clear the h-14 fixed nav with breathing room. */
-  scroll-padding-top: 5rem;
 }
 
 body {
-  background: #09090b;
-  color: #fafafa;
-  overflow-x: hidden;
+  background: var(--paper);
+  color: var(--ink);
 }
 
-/* Selection */
 ::selection {
-  background: rgba(139, 92, 246, 0.25);
-  color: #fafafa;
+  background: rgb(var(--hl) / 0.25);
 }
 
-/* Keyboard focus — invisible for mouse users, visible for keyboard.
-   Subtle zinc ring + faint glow that works across every surface. */
-:focus {
-  outline: none;
-}
 :focus-visible {
-  outline: none;
-  box-shadow:
-    0 0 0 2px #09090b,
-    0 0 0 3px rgba(161, 161, 170, 0.7);
-  border-radius: 4px;
-}
-/* Rounded surfaces (cards, pills) deserve matching focus radii. */
-.card:focus-visible,
-.tag:focus-visible {
-  border-radius: 16px;
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
-/* Respect prefers-reduced-motion globally. Framer Motion components
-   opt in via useReducedMotion(); this handles CSS-driven motion. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -53,103 +51,36 @@ body {
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }
 
-/* Scrollbar — razor thin */
-::-webkit-scrollbar {
-  width: 4px;
+/* Body links: quiet underline that picks up the accent on hover. */
+.link {
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color 0.15s, color 0.15s;
 }
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: #3f3f46;
-  border-radius: 2px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #52525b;
+.link:hover {
+  color: var(--accent);
+  text-decoration-color: currentColor;
 }
 
-/* ---- Utility classes ---- */
-
-/* Section index label: "01 — About" */
-.section-index {
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  color: #a1a1aa;
-  text-transform: uppercase;
+/* Swap the native disclosure triangle for a +/− marker. */
+summary {
+  cursor: pointer;
+  list-style: none;
 }
-.section-index em {
-  color: #52525b;
-  font-style: normal;
-  padding: 0 0.5em;
+summary::-webkit-details-marker {
+  display: none;
 }
-
-/* Tag pill */
-.tag {
-  font-size: 0.75rem;
-  padding: 0.25rem 0.625rem;
-  border-radius: 9999px;
-  border: 1px solid #3f3f46;
-  color: #a1a1aa;
-  transition: border-color 0.2s, color 0.2s;
+summary::before {
+  content: '+';
+  display: inline-block;
+  width: 1em;
 }
-.tag:hover,
-.group:hover .tag {
-  border-color: #52525b;
-  color: #d4d4d8;
-}
-
-/* Subtle noise overlay for texture */
-.noise {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  pointer-events: none;
-  opacity: 0.018;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 256px 256px;
-}
-
-/* Divider line with gradient fade */
-.divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #27272a 25%, #3f3f46 50%, #27272a 75%, transparent);
-}
-
-/* Card with hover border glow */
-.card {
-  border: 1px solid #27272a;
-  border-radius: 16px;
-  background: #111113;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-.card:hover {
-  border-color: #3f3f46;
-  box-shadow:
-    0 0 0 1px rgba(139, 92, 246, 0.04),
-    0 8px 40px -12px rgba(0, 0, 0, 0.5);
-}
-
-/* Glow orb (decorative) */
-.orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(100px);
-  pointer-events: none;
-  opacity: 0.07;
-}
-
-/* Gradient text (used on /honors hero) */
-.gradient-text {
-  background: linear-gradient(135deg, #22d3ee 0%, #a78bfa 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+details[open] > summary::before {
+  content: '\2212';
 }

@@ -24,7 +24,7 @@ export async function generateMetadata({
     title,
     description: entry.summary,
     openGraph: {
-      title: `${title} · Honors Portfolio`,
+      title: `${title} · Honors portfolio`,
       description: entry.summary,
       type: 'article',
     },

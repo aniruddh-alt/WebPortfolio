@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next'
 import { getAllHonorsEntries } from '@/lib/honors-data'
 
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://aniruddhan.vercel.app'
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.aniruddhan.com'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date()

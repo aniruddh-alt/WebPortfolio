@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Honors Portfolio',
+  title: 'Honors portfolio',
   description:
-    'A collection of reflections and experiences from the University of Cincinnati Honors Program — year-in-reviews and long-form writeups on research, entrepreneurship, and international-student life.',
+    'Year-in-review essays and longer writeups from the University of Cincinnati Honors Program, covering research, entrepreneurship, and life as an international student.',
   openGraph: {
-    title: 'Honors Portfolio · Aniruddhan Ramesh',
+    title: 'Honors portfolio · Aniruddhan Ramesh',
     description:
-      'Year-in-reviews and long-form reflections from the UC University Honors Program.',
+      'Year-in-review essays and writeups from the UC Honors Program.',
     type: 'website',
   },
 }
