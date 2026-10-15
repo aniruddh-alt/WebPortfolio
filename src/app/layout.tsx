@@ -1,20 +1,22 @@
 import type { Metadata } from "next";
-import { Instrument_Serif } from "next/font/google";
+import { Newsreader } from "next/font/google";
 import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 
-const instrumentSerif = Instrument_Serif({
+const newsreader = Newsreader({
   subsets: ["latin"],
-  weight: "400",
-  variable: "--font-instrument",
+  style: ["normal", "italic"],
+  axes: ["opsz"],
+  variable: "--font-newsreader",
   display: "swap",
+  // Next has no fallback metrics for Newsreader; skip the size-adjust step.
+  adjustFontFallback: false,
 });
 
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://aniruddhan.vercel.app";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.aniruddhan.com";
 const DESCRIPTION =
-  "Aniruddhan Ramesh — machine learning engineer at Oumi. Research on the inside of language models, open-source tooling for foundation models, and applied ML across clinical, audio, and real-estate domains.";
+  "Aniruddhan Ramesh, computer science student at the University of Cincinnati. AI safety research using mechanistic interpretability, previously a machine learning engineering intern at Oumi.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -25,7 +27,10 @@ export const metadata: Metadata = {
   description: DESCRIPTION,
   keywords: [
     "Aniruddhan Ramesh",
+    "AI safety",
     "mechanistic interpretability",
+    "AURA-Eval",
+    "LLM agents",
     "Oumi",
     "NeurIPS",
     "machine learning engineer",
@@ -59,7 +64,10 @@ export const metadata: Metadata = {
 export const viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#09090b",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fdfdfc" },
+    { media: "(prefers-color-scheme: dark)", color: "#131418" },
+  ],
 };
 
 export default function RootLayout({
@@ -70,10 +78,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${instrumentSerif.variable} ${GeistSans.variable} ${GeistMono.variable}`}
+      className={`${newsreader.variable} ${GeistSans.variable}`}
     >
-      <body className="font-sans antialiased bg-surface-0 text-zinc-50 min-h-screen">
-        <div className="noise" />
+      <body className="font-serif text-[18px] leading-[1.6] antialiased">
         {children}
       </body>
     </html>

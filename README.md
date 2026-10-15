@@ -6,9 +6,8 @@ Personal portfolio site. AI researcher focused on mechanistic interpretability, 
 
 - **Next.js 14** with App Router
 - **TypeScript**
-- **Tailwind CSS** — custom dark design system
-- **Framer Motion** — scroll-triggered animations
-- **Canvas API** — animated neural network background
+- **Tailwind CSS**: color tokens live as CSS variables in `globals.css`, with a dark palette under `prefers-color-scheme`
+- **MDX** (`next-mdx-remote`) for the honors writeups in `content/honors/`
 
 ## Development
 
@@ -24,20 +23,24 @@ Open [http://localhost:3000](http://localhost:3000).
 ```
 src/
 ├── app/
-│   ├── globals.css         # Design tokens, utilities
-│   ├── layout.tsx          # Root layout, fonts
-│   └── page.tsx            # Main page
+│   ├── globals.css           # Color tokens, link and details styles
+│   ├── layout.tsx            # Root layout, fonts (Newsreader + Geist Sans)
+│   ├── page.tsx              # Home page
+│   └── honors/               # Honors portfolio index and MDX articles
 ├── components/
 │   ├── sections/
-│   │   ├── Hero.tsx        # Intro + links
-│   │   ├── Research.tsx    # Research interests
-│   │   ├── Experience.tsx  # Work history
-│   │   └── Projects.tsx    # Project showcase
-│   ├── NetworkBackground.tsx  # Animated canvas background
-│   ├── Navigation.tsx      # Fixed nav
-│   └── Footer.tsx          # Contact + footer
+│   │   ├── Hero.tsx          # Intro and contact links
+│   │   ├── Experience.tsx
+│   │   ├── Publications.tsx
+│   │   ├── Projects.tsx      # Projects plus live GitHub PR list
+│   │   ├── Service.tsx
+│   │   └── Awards.tsx
+│   ├── Header.tsx            # Name and nav, shared by every page
+│   ├── Section.tsx           # Section heading and dated two-column row
+│   ├── Footer.tsx            # Contact
+│   └── honors-mdx-components.tsx
 └── lib/
-    └── utils.ts            # Utility functions
+    └── honors-data.ts        # Loads content/honors/*.mdx
 ```
 
 ## Deployment
