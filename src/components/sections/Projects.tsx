@@ -26,13 +26,18 @@ export default function Projects() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(
-          `https://api.github.com/search/issues?q=author:${GITHUB_USERNAME}+type:pr+base:main&sort=created&order=desc&per_page=100`,
-          { headers: { Accept: "application/vnd.github.v3+json" } }
-        );
-        if (!res.ok) return;
-
-        const { items } = await res.json();
+        // Search returns at most 100 per page; page through all PRs (any base branch).
+        const items = [];
+        for (let page = 1; page <= 10; page++) {
+          const res = await fetch(
+            `https://api.github.com/search/issues?q=author:${GITHUB_USERNAME}+type:pr&sort=created&order=desc&per_page=100&page=${page}`,
+            { headers: { Accept: "application/vnd.github.v3+json" } }
+          );
+          if (!res.ok) break;
+          const data = await res.json();
+          items.push(...data.items);
+          if (data.items.length < 100) break;
+        }
         const all: Record<string, PR[]> = {};
 
         for (const item of items) {
