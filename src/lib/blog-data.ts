@@ -11,6 +11,8 @@ export type BlogPost = {
   summary: string
   /** Section the post is listed under on /blog, e.g. "AI safety" */
   topic: string
+  /** Optional group inside the topic, e.g. "Agents" */
+  subtopic?: string
   tags: string[]
   draft: boolean
   words: number
@@ -63,6 +65,7 @@ async function loadAllPosts(): Promise<BlogPost[]> {
         date: toIsoDate(data.date),
         summary: data.summary ? String(data.summary) : '',
         topic: data.topic ? String(data.topic) : 'Other',
+        subtopic: data.subtopic ? String(data.subtopic) : undefined,
         tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
         draft: data.draft === true,
         words: body ? body.split(/\s+/).length : 0,
