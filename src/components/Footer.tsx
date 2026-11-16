@@ -2,8 +2,8 @@ export default function Footer() {
   return (
     <footer id="contact" className="mt-24 mb-16 pt-8 border-t border-rule">
       <p>
-        If you work on AI safety, interpretability, or the evaluation of LLM
-        agents, I would be glad to hear from you at{' '}
+        If you work on AI safety, interpretability, or evaluating LLM agents, I
+        would really like to hear from you, so feel free to email me at{' '}
         <a href="mailto:rameshad@mail.uc.edu" className="link text-accent">
           rameshad@mail.uc.edu
         </a>

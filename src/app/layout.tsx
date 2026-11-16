@@ -16,7 +16,7 @@ const newsreader = Newsreader({
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.aniruddhan.com";
 const DESCRIPTION =
-  "Aniruddhan Ramesh, computer science student at the University of Cincinnati. AI safety research using mechanistic interpretability, previously a machine learning engineering intern at Oumi.";
+  "Aniruddhan Ramesh is a computer science student at the University of Cincinnati who works on AI safety using mechanistic interpretability, and was previously a machine learning engineering intern at Oumi.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

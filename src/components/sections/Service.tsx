@@ -21,13 +21,13 @@ export const roles = [
     period: 'Apr 2026 – present',
     title: 'President, IEEE-HKN Tau Chapter, University of Cincinnati',
     description:
-      'I direct the chapter’s operations, outreach, events, and technical workshops.',
+      'I run the chapter, including its outreach, events, and technical workshops.',
   },
   {
     period: 'Aug 2024 – present',
     title: 'Strategic Advisor, Bearcat Ventures',
     description:
-      'I joined the University of Cincinnati’s student-run $1M evergreen venture fund as an analyst, became a general partner, and then served as managing partner until April 2026, managing its strategy and operations. I now advise the fund. I also co-led the 2026 Venture Capital Investment Competition team and developed its training curriculum and term-sheet evaluation process.',
+      'I joined the University of Cincinnati’s $1M student-run evergreen venture fund as an analyst and later became a general partner. I was managing partner until April 2026, running the fund’s strategy and operations, and I now advise it. I also co-led our team at the 2026 Venture Capital Investment Competition and put together its training curriculum and term-sheet evaluation process.',
   },
 ]
 

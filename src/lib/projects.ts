@@ -9,7 +9,7 @@ export const projects = [
   {
     title: "GlassBox",
     description:
-      "White-box observability for self-hosted open LLMs. It monitors model internals during inference with linear probes and sparse autoencoder features, to catch misalignment that capability evaluations miss. It includes a monitoring dashboard with alerting, a local redaction layer for private data, an AUROC-gated probe pipeline, and a GPU inference microservice.",
+      "White-box observability for self-hosted open LLMs. It monitors model internals during inference with linear probes and sparse autoencoder features, so it can catch misalignment that capability evaluations miss. It comes with a monitoring dashboard with alerting, a local redaction layer for private data, an AUROC-gated probe pipeline, and a GPU inference microservice.",
     tags: ["Python", "Sparse autoencoders", "AI safety"],
     href: "https://github.com/aniruddh-alt/glassbox",
   },
@@ -51,7 +51,7 @@ export const projects = [
   {
     title: "BuildGPT",
     description:
-      "A small GPT implemented from first principles, written to understand each component of the architecture before relying on larger libraries.",
+      "A small GPT built from first principles. I wrote it to understand each part of the architecture before relying on larger libraries.",
     tags: ["Python", "PyTorch"],
     href: "https://github.com/aniruddh-alt/BuildGPT",
   },

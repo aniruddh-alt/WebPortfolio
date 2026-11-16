@@ -28,10 +28,10 @@ export default async function HonorsArticle({ params }: Props) {
       <Header />
       <article className="pt-12 sm:pt-16">
         <Link
-          href="/honors"
+          href="/blog#honors-essays"
           className="font-sans text-[15px] text-muted hover:text-ink transition-colors"
         >
-          Honors portfolio
+          Honors essays
         </Link>
         <h1 className="mt-6 text-[34px] sm:text-[40px] font-medium tracking-tight leading-tight">
           {entry.title}
