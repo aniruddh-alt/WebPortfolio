@@ -4,7 +4,7 @@ import {
   formatDate,
   readingMinutes,
 } from '@/lib/blog-data'
-import { getAllHonorsEntries } from '@/lib/honors-data'
+import { getYearInReviews, getExperiences } from '@/lib/honors-data'
 import Header from '@/components/Header'
 import Section from '@/components/Section'
 import Footer from '@/components/Footer'
@@ -57,10 +57,15 @@ function sectionId(topic: string): string {
 }
 
 export default async function Blog() {
-  const [topics, honorsEntries] = await Promise.all([
+  const [topics, yearInReviews, experiences] = await Promise.all([
     getPostsByTopic(),
-    getAllHonorsEntries(),
+    getYearInReviews(),
+    getExperiences(),
   ])
+  const honorsGroups = [
+    { id: 'year-in-review', title: 'Year in review', entries: yearInReviews },
+    { id: 'experiences', title: 'Experiences', entries: experiences },
+  ]
 
   return (
     <main className="max-w-[42rem] mx-auto px-5">
@@ -88,18 +93,27 @@ export default async function Blog() {
         </Section>
       ))}
       <Section id="honors-essays" title="Honors essays">
-        <ul className="-my-4 divide-y divide-rule">
-          {honorsEntries.map((entry) => (
-            <Row
-              key={entry.slug}
-              href={`/honors/${entry.slug}`}
-              title={entry.title}
-              date={entry.date}
-              summary={entry.summary}
-              meta={entry.subtitle}
-            />
+        <div className="space-y-12">
+          {honorsGroups.map((group) => (
+            <div key={group.id} id={group.id} className="scroll-mt-8">
+              <h3 className="font-sans text-[14px] uppercase tracking-wide text-muted mb-2">
+                {group.title}
+              </h3>
+              <ul className="divide-y divide-rule">
+                {group.entries.map((entry) => (
+                  <Row
+                    key={entry.slug}
+                    href={`/honors/${entry.slug}`}
+                    title={entry.title}
+                    date={entry.date}
+                    summary={entry.summary}
+                    meta={entry.subtitle}
+                  />
+                ))}
+              </ul>
+            </div>
           ))}
-        </ul>
+        </div>
       </Section>
       <Footer />
     </main>
