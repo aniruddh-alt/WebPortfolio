@@ -4,7 +4,7 @@ const navItems = [
   { label: 'Experience', href: '/#experience' },
   { label: 'Publications', href: '/#publications' },
   { label: 'Projects', href: '/#projects' },
-  { label: 'Essays', href: '/honors' },
+  { label: 'Blog', href: '/blog' },
 ]
 
 export default function Header({ home = false }: { home?: boolean }) {
