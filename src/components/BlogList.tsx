@@ -64,12 +64,10 @@ export default function BlogList({
         {shown.map((entry) => (
           <li
             key={entry.href}
-            className="grid grid-cols-1 sm:grid-cols-[8rem_1fr] gap-x-6 gap-y-1"
+            className="grid grid-cols-1 sm:grid-cols-[8.5rem_1fr] gap-x-8 gap-y-1"
           >
             <div className="font-sans text-[14px] text-muted sm:pt-[0.55em]">
-              <span className="tabular-nums whitespace-nowrap">
-                {entry.date}
-              </span>
+              <span className="tabular-nums">{entry.date}</span>
               {active === null && topics.length > 1 && (
                 <span className="sm:block">
                   <span className="sm:hidden">, </span>
