@@ -28,7 +28,7 @@ export default async function HonorsArticle({ params }: Props) {
       <Header />
       <article className="pt-12 sm:pt-16">
         <Link
-          href="/blog#honors-essays"
+          href="/blog"
           className="font-sans text-[15px] text-muted hover:text-ink transition-colors"
         >
           Honors essays
